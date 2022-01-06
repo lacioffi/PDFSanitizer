@@ -13,9 +13,10 @@ include /etc/firejail/disable-programs.inc
 
 
 ### home directory whitelisting
-#whitelist ~/.local/lib/python3.8/site-packages
-whitelist ~/PDFSanitizer/*
-include /etc/firejail/whitelist-common.inc
+whitelist ~/.local/lib/python3.8/site-packages
+whitelist ${HOME}/PDFSanitizer/
+#include /etc/firejail/whitelist-common.inc
+
 
 ### filesystem
 
@@ -37,4 +38,3 @@ net none
 
 ### environment
 shell none
-
