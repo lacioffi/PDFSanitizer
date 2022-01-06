@@ -16,8 +16,8 @@ This project uses the following libraries:
 
 ### Security Considerations
 
-This script will render possibly malicious PDFs to generate the sanitized file using MuPDF, which has had exploits in the past:
-    https://www.cvedetails.com/vulnerability-list/vendor_id-10846/product_id-20840/Artifex-Mupdf.html 
+This script will render possibly malicious PDFs to generate the sanitized file using MuPDF, which has had exploits in the past: <br>
+    https://www.cvedetails.com/vulnerability-list/vendor_id-10846/product_id-20840/Artifex-Mupdf.html <br>
 Therefore, assume the machine this runs on will be pwned eventually. 
   
 To mitigate this risk you can use CloudFlare's sandbox to filter the system calls this program can make.
