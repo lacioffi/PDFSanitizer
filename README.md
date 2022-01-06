@@ -32,12 +32,15 @@ Install it using:
 
     sudo apt-get install firejail
 
-The profile is already included in this repo. Use it by running the following command:
- 
+The profile is already included in this repo, but it assumes you're running from ~/PDFSanitizer. Setup and use it by running the following commands:
+
+    cd ~
+    git clone https://github.com/lacioffi/PDFSanitizer
+    cd ~/PDFSanitizer/ 
     firejail --profile=pdfsanitizer.profile python3 ~/PDFSanitizer/pdfsanitizer.py file.pdf ~/PDFSanitizer/out
 
-Plase note that the program must be located in ~/PDFSanitizer.
-The output folder can have any name, but it must already exist and be inside ~/PDFSanitizer.
+Plase note that the input file must be located in ~/PDFSanitizer.
+The output folder can have any name, but it must already exist and also be inside ~/PDFSanitizer.
 
 If you want to run PDFSanitizer from another folder, change the following line in "pdfsanitizer.profile":
 
@@ -46,9 +49,12 @@ If you want to run PDFSanitizer from another folder, change the following line i
 To wherever you're running the program from.
    
 
-If you want the output folder to be outside of PDFSanitizer's folder, simply create it manually and add a line in "pdfsanitizer.profile":
+If you want the output folder or the input file to be outside of PDFSanitizer's folder, simply add a line in "pdfsanitizer.profile":
     
     whitelist /full/path/to/output/folder
+    whitelist /full/path/to/file.pdf
+    
+Again, please note that the output folder must already exist.
  
 
 #### CloudFlare Sandbox
