@@ -14,22 +14,60 @@ This project uses the following libraries:
     
     img2pdf - By Johannes Schauer Marin Rodrigues (josch@mister-muffin.de)
 
-### Security Considerations
+## Security Considerations
 
-This script will render possibly malicious PDFs to generate the sanitized file using MuPDF, which has had exploits in the past: <br>
-    https://www.cvedetails.com/vulnerability-list/vendor_id-10846/product_id-20840/Artifex-Mupdf.html 
-<br>
-Therefore, assume the machine this runs on will be pwned eventually. 
+This script will render possibly malicious PDFs to generate the sanitized file using MuPDF, which has had exploits in the past:
+https://www.cvedetails.com/vulnerability-list/vendor_id-10846/product_id-20840/Artifex-Mupdf.html
+Therefore, assume the machine this runs on will be pwned eventually.
   
-To mitigate this risk you can use CloudFlare's sandbox to filter the system calls this program can make.
-Download and build it from here: https://github.com/cloudflare/sandbox
-Take the generated "libsandbox.so" file, put it in this folder and run the following command:
+To mitigate this risk, I recommend two techinques:
 
-    LD_PRELOAD=./libsandbox.so SECCOMP_SYSCALL_ALLOW="read:write:lseek:close:openat:brk:stat:munmap:fstat:getdents64:ioctl:rt_sigaction:mmap:mprotect:pread64:lstat:dup:mremap:futex:getegid:getuid:getgid:geteuid:sigaltstack:rt_sigprocmask:access:uname:fcntl:getcwd:readlink:sysinfo:arch_prctl:gettid:set_tid_address:set_robust_list:prlimit64:getrandom:exit_group" python3 pdfsanitizer.py file.pdf ./outFolder
+### Running the script on a Sandbox
+
+#### Firejail
+
+This sandbox will restrict all network access, unnecessary syscalls and reading/writing from unexpected files/folders. I recommend this method.
+
+Install it using:
+
+    sudo apt-get install firejail
+
+The profile is already included in this repo. Use it by running the following command:
+ 
+    firejail --profile=pdfsanitizer.profile python3 ~/PDFSanitizer/pdfsanitizer.py file.pdf ~/PDFSanitizer/out
+
+Plase note that the program must be located in ~/PDFSanitizer.
+The output folder can have any name, but it must already exist and be inside ~/PDFSanitizer.
+
+If you want to run PDFSanitizer from another folder, change the following line in "pdfsanitizer.profile":
+
+    whitelist ${HOME}/PDFSanitizer/
     
+To wherever you're running the program from.
+   
 
-Another (possibly safer) option would be to run this script in an ephemeral instance, 
-reading the input and writing the output to external buckets or similar.
+If you want the output folder to be outside of PDFSanitizer's folder, simply create it manually and add a line in "pdfsanitizer.profile":
+    
+    whitelist /full/path/to/output/folder
+ 
 
-### To-do
+#### CloudFlare Sandbox
+
+This sandbox will restrict all network access and unnecessary syscalls, but will not restrict reading/writing to arbitrary files/folders.
+
+Download and build it from here: https://github.com/cloudflare/sandbox
+Take the generated "libsandbox.so" file, put it in this PDFSanitizer's folder and run the following command:
+
+    LD_PRELOAD=./libsandbox.so SECCOMP_SYSCALL_ALLOW="read:write:lseek:close:openat:brk:stat:munmap:fstat:getdents64:ioctl:rt_sigaction:mmap:mprotect:pread64:lstat:dup:mremap:futex:getegid:getuid:getgid:geteuid:sigaltstack:rt_sigprocmask:access:uname:fcntl:getcwd:readlink:sysinfo:arch_prctl:gettid:set_tid_address:set_robust_list:prlimit64:getrandom:exit_group" python3 pdfsanitizer.py file.pdf ./output
+
+
+### Running the script on an isolated environment
+
+For maximum security, run this script on an isolated, ephemeral instance or even a serverless environment. 
+Block all network communications, maybe kill the instance after the job is done, and only allow reading from an input folder/bucket
+and writing to an output folder/bucket.
+
+I didn't try this method, but I believe you can do it with some Cloud Majyks.
+
+## To-do
 This method removes EVERYTHING from the PDF. It would be nice to at least keep the text copy-pasteable.
