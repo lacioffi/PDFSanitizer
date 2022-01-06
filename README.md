@@ -5,8 +5,10 @@ To do this, the PDF files are rendered and converted to images using PyMuPDF.
 The images are then saved to a new PDF file using img2pdf. This ensures no visual data is lost,
 but any scripts/external references/flash files are removed.
 
-<b>Instalation</b>: pip install -r requirements.txt <br>
-<b>Usage</b>: pdfsanitizer.py \<filename> \<output folder>
+<b>Instalation</b>: 
+    pip install -r requirements.txt <br>
+<b>Usage</b>: 
+    pdfsanitizer.py \<filename> \<output folder>
 
 This project uses the following libraries:
     
