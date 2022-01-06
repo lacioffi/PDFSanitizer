@@ -6,9 +6,12 @@ The images are then saved to a new PDF file using img2pdf. This ensures no visua
 but any scripts/external references/flash files are removed.
 
 <b>Instalation</b>: 
-    pip install -r requirements.txt <br>
+
+    pip install -r requirements.txt 
+
 <b>Usage</b>: 
-    pdfsanitizer.py \<filename> \<output folder>
+
+    pdfsanitizer.py <filename> <output folder>
 
 This project uses the following libraries:
     
