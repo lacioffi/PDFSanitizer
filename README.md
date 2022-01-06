@@ -13,6 +13,8 @@ This project uses the following libraries:
     PyMuPDF - By Jorj X. McKie (@JorjMcKie)
     
     img2pdf - By Johannes Schauer Marin Rodrigues (josch@mister-muffin.de)
+    
+Special thanks to @CoolerVoid for helping with the sandboxing part <3
 
 ## Security Considerations
 
