@@ -7,6 +7,8 @@ but any scripts/external references/flash files are removed.
 
 <b>Instalation</b>: 
 
+    git clone https://github.com/lacioffi/PDFSanitizer
+    cd PDFSanitizer
     pip install -r requirements.txt 
 
 <b>Usage</b>: 
